@@ -6,6 +6,17 @@ android {
     namespace = "com.example.myapplication"
     compileSdk = 34
 
+    // Cấu hình ký ứng dụng để có thể cài đặt được file Release
+    signingConfigs {
+        create("release") {
+            // Thay vì trỏ trực tiếp đến file, hãy dùng biến môi trường
+            storeFile = file(System.getenv("KEYSTORE_FILE") ?: "my_key.jks")
+            storePassword = "12345678"
+            keyAlias = "key0"
+            keyPassword = "12345678"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.example.myapplication"
         minSdk = 24
@@ -17,8 +28,9 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") { // Phải dùng getByName trong Kotlin DSL
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -49,5 +61,4 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation("com.google.android.material:material:1.12.0")
-
 }
