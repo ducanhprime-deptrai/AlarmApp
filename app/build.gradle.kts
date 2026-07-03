@@ -17,12 +17,17 @@ android {
         }
     }
 
+    // TỰ ĐỘNG: Lấy số bản build từ Jenkins (mặc định là 1 nếu chạy ở máy cá nhân)
+    val jenkinsBuildNumber = System.getenv("BUILD_NUMBER")?.toIntOrNull() ?: 1
+
     defaultConfig {
         applicationId = "com.example.myapplication"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+
+        // TỰ ĐỘNG: Gán giá trị tăng dần theo Jenkins để triệt tiêu cache điện thoại
+        versionCode = jenkinsBuildNumber
+        versionName = "1.0.$jenkinsBuildNumber"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
