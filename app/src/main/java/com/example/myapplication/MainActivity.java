@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PICK_AUDIO = 100;
 
     private TimePicker timePicker;
-    private Button btnPickMusic;
+    //private Button btnPickMusic;
     private Button btnSetAlarm;
     private TextView tvMusicName;
 
