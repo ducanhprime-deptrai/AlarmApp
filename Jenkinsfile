@@ -55,6 +55,18 @@ pipeline {
                 // Lệnh này sẽ quét lỗi giao diện, bảo mật, hiệu năng. Nếu có lỗi nghiêm trọng (Fatal), nó sẽ tự động dừng build.
                 bat 'gradlew.bat lintRelease'
             }
+            post {
+                            always {
+                                publishHTML([
+                                    allowMissing: false,
+                                    alwaysLinkToLastBuild: true,
+                                    keepAll: true,
+                                    reportDir: 'app/build/reports',
+                                    reportFiles: 'lint-results-release.html',
+                                    reportName: 'Báo cáo chất lượng code (Android Lint)'
+                                ])
+                            }
+                        }
         }
 
         stage('Kiểm thử tự động (Unit Tests)') {
